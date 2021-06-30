@@ -1,12 +1,28 @@
 <main [attr.style]="sanitizer.bypassSecurityTrustStyle(this.franchiseStyles)">
-
-  <h1>{{title}}</h1>
+  <button (click)="askToken()">REFRESH TOKEN</button>
+  <h1>{{ title }}</h1>
   <div class="logo">
-    <p>здесь ссылка на лого: <strong>{{logo}}</strong></p>
+    <p>
+      здесь ссылка на лого: <strong>{{ logo }}</strong>
+    </p>
   </div>
 
-
   <h3>Стили:</h3>
-  <p>{{this.franchiseStyles}}</p>
+  <p>{{ this.franchiseStyles }}</p>
+
+  <form [formGroup]="Form" (submit)="onSubmit()">
+    <div class="form-control" *ngFor="let el of Form.controls | keyvalue">
+      {{ el.key }}:
+      <input
+        class="form-control"
+        [type]="isColorPicker(el.key) ? 'color' : 'text'"
+        [name]="el.key"
+        [id]="el.key"
+        [placeholder]="el.key"
+        [formControlName]="el.key"
+      />
+    </div>
+    <input type="submit" value="ok" />
+  </form>
   <router-outlet></router-outlet>
 </main>
